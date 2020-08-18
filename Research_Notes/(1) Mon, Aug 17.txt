@@ -1,0 +1,77 @@
+++++++++++ Mon, Aug 17, 2020 @ 5:45pm ++++++++++
+
+
+- important attributes of an OCR task:
+	- text density
+	- structure of text (rows, or random)
+	- fonts
+	- character type (language, numbers, letters)
+	- artifacts (i.e. noise)
+	- location (in the image)
+
+- if your document shape is consistent, then you may only need to do some simple reshaping before you can implement OCR
+	- structured nature of printed documents make them easier to parse
+
+- a common OCR tool for structured text is "Tesseract"
+
+- could try to incorporate solutions from the "Mnist" dataset?
+	- can detect characters separately
+
+==========
+
+- generally, there are two steps to OCR:
+	1. Detect any instance of text in an image
+	2. Detect/classify the characters (three main approaches)
+		i. classic computer vision techniques
+		ii. specialized deep learning
+		iii. standard deep learning
+
+(i) Classic CV Techniques
+- general approach
+	- apply filter to make characters stand out from background
+	- apply contour detection to recognize characters one-by-one
+	- apply image classification to identify characters
+		- can be done with ML if needed
+
+- contour detection may be really hard
+	- may require manual fine-tuning/preprocessing
+	- problems if characters are too close together
+
+- only use classical techniques if your task is straight-forward
+
+(ii) Specialized Deep Learning Techniques
+- much more general
+
+- can look for already-made GitHub repositories
+	- just try their solution on your images!
+
+- some examples:
+	- EAST (Efficient Accurate Scene Text detector)
+		- seems to be used for real-world picture data
+
+	- CRNN (Convolutional-Recurrent Neural Network)
+		- an article from 2015
+		- uses hybrid end-to-end architecture
+		- captures words in 3-step approach:
+			- convolutional layer
+			- recurrent layers
+			- transcription layer
+
+(iii) Standard Deep Learning Approach
+- ex: SSD; YOLO; Mask RCNN
+
+- standard approaches may be better at object classification and NOT good at OCR?
+
+==========
+
+- some research on contour creation:
+	- can use 'scikit-image' library to create contours
+
+REFERENCES:
+
+- https://towardsdatascience.com/a-gentle-introduction-to-ocr-ee1469a201aa
+
+- https://stackoverflow.com/questions/9413216/simple-digit-recognition-ocr-in-opencv-python
+	- provides code example for OCR (really good info!)
+
+
