@@ -7,14 +7,18 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 
 my_image = cv2.imread("sample_student.jpg")
 my_image2 = cv2.imread("sample_student_no_back_sheet.jpg")
-my_image3 = cv2.imread("handwriting_test_ADF.jpg")
+# my_image3 = cv2.imread("handwriting_test_ADF.jpg")
+# my_image3 = cv2.imread("handwriting_ScanBed_dottedSolid.jpg")
+# my_image3 = cv2.imread("handwriting_ScanBed_thinSolid.jpg")
+my_image3 = cv2.imread("handwriting_ScanBed_dottedPaper.jpg")
 
 my_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2RGB)
+my_image3 = cv2.cvtColor(my_image3, cv2.COLOR_BGR2GRAY)
 
 
 image_height, image_width, _ = my_image.shape
 image_height2, image_width2, _ = my_image2.shape
-image_height3, image_width3, _ = my_image3.shape
+image_height3, image_width3 = my_image3.shape
 
 print(image_height3) # 3229
 print(image_width3) # 2479
@@ -23,8 +27,10 @@ print(image_width3) # 2479
 WIDTH = int(1366*0.7)
 HEIGHT = int(768*0.7)
 
-WIDTH3 = int(image_width3*0.25)
-HEIGHT3 = int(image_height3*0.25)
+
+SCALE_FACTOR = 0.35
+WIDTH3 = int(image_width3*SCALE_FACTOR)
+HEIGHT3 = int(image_height3*SCALE_FACTOR)
 
 my_image = cv2.resize(my_image, (WIDTH, HEIGHT)) 
 my_image2 = cv2.resize(my_image2, (WIDTH, HEIGHT))
@@ -80,11 +86,25 @@ z3 = pytesseract.image_to_data(my_image3, lang="eng")
 #             print(box[11])
 
 # print(y3)
+
+boxes = [box.split() for box in y3.splitlines()]
+# print(boxes)
+
+# print(y3.splitlines().split())
+boxes.sort(key=lambda elem: elem[0])
+
+for box in boxes:
+    print(box)
+
+
+# print(boxes, end="\n")
 for box in y3.splitlines():
     box = box.split()
-    print(box)
+    # print(box)
     x,y,w,h = int(box[1]), int(box[2]), int(box[3]), int(box[4])
     cv2.rectangle(my_image3, (x,HEIGHT3-y), (w,HEIGHT3-h), (0,0,255), 1)
+
+    # cv2.rectangle(my_image3, (x,image_height3-y), (w,image_height3-h), (0,0,255), 1)
     # cv2.rectangle(my_image3, (image_height3-y,x), (image_height3-h,w), (0,0,255), 1)
     # cv2.rectangle(my_image3, (L,HEIGHT3-T), (R,HEIGHT3-B), (0,0,255), 3)
     # cv2.rectangle(my_image3, (x,y), (w,h), (0,0,255), 1)
