@@ -5,8 +5,41 @@ import cv2
 # my_image = cv2.imread('Handwriting_Tests/handwriting_ADF_dotted(BEST).jpg', cv2.IMREAD_COLOR) # Seems to work with rows
 
 # my_image = cv2.imread('Handwriting_Tests/bed1.jpg', cv2.IMREAD_COLOR)
-my_image = cv2.imread('Handwriting_Tests/bed2.jpg', cv2.IMREAD_COLOR)
+# my_image = cv2.imread('Handwriting_Tests/bed2.jpg', cv2.IMREAD_COLOR)
+
+
+my_image = cv2.imread('Handwriting_Samples/uppercase.jpg', cv2.IMREAD_COLOR)
+
+
 # my_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2RGB)
+
+# cv2.rectangle(my_image, (185,210), (205,230), (255,255,0), 2)
+
+##############
+temp = cv2.cvtColor(my_image, cv2.COLOR_BGR2GRAY)
+current_max = 255
+# (i_max, j_max) = (0,0)
+i_max = 0
+j_max = 0
+count = 0
+for i in range(185,205+1):
+    for j in range(210,230+1):
+        
+        if temp[j,i] < current_max:
+            # print(temp[j,i])
+            current_max = temp[j,i]
+            i_max = i
+            j_max = j
+            # (i_max, j_max) = (i,j)
+            count += 1
+
+print(current_max)
+print(count)
+print(f"({i_max},{j_max})")
+
+my_image[j_max,i_max] = [0,255,255]
+##############
+
 
 image_height, image_width, _ = my_image.shape
 SCALE_FACTOR = 0.35
@@ -20,7 +53,7 @@ B = 0
 thickness = 1
 pixel_to_mm = 0.2645833333 # 1pixel = 0.2645833333mm BUT NOT ALWAYS THE SAME SIZE!!
 
-(x,y) = (178,178)
+(x,y) = (i_max,j_max) # Both used to be 178
 w = 72
 h = 72
 (X,Y) = (x+w,y+h)
@@ -36,43 +69,44 @@ cv2.imwrite("test_big_letter.jpg", cropped)
 
 LETTERS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 SMALL_LETTERS = [x.lower() for x in LETTERS]
+# print(SMALL_LETTERS, end=" ")
 
 # Testing all box placements
 # dx = w
 # dy = h
 
-y_offset = -39
-for j in range(1,36):
+y_offset = 0 # Was -39
+for j in range(0,35):
     # y_offset += 1
 
-    if j in range(0,3):
+    if j in range(0,3): # A-C
         y_offset += 3 
-    elif j in range(3,6): 
-        y_offset += 0
-    elif j in range(6,9): 
-        y_offset += 0
-    elif j in range(9,12): 
-        y_offset += 0
-    elif j in range(12,15): 
-        y_offset += 0
-    elif j in range(15,18): 
-        y_offset += 0
-    elif j in range(18,21): 
-        y_offset += 0
-    elif j in range(21,24): 
-        y_offset += 0
-    elif j in range(24,27): 
-        y_offset += 0
-    elif j in range(27,30): 
-        y_offset += 0
-    elif j in range(30,33): 
-        y_offset += 0
-    else:
-        y_offset += 0   
+    elif j in range(3,6): # D-F
+        y_offset += 3
+    elif j in range(6,9): # G-I
+        y_offset += 6
+    elif j in range(9,12): # J-L
+        y_offset += 3
+    elif j in range(12,15): # M-O
+        y_offset += 9
+    elif j in range(15,18): # P-R
+        y_offset += 3
+    elif j in range(18,21): # S-U
+        y_offset += 6
+    elif j in range(21,24): # V-X
+        y_offset += 6
+    elif j in range(24,27): # Y,Z,1
+        y_offset += 3
+    elif j in range(27,30): # 2-4
+        y_offset += 6
+    elif j in range(30,33): # 5-7
+        y_offset += 3
+    else:                   # 8,9
+        y_offset += 9   
     
     
     
-    x_offset = 15 # was -2 for the solid line test sheet
+    x_offset = 2 # Was 15
     for i in range(0,26):
 
         if i in range(0,5):
@@ -88,12 +122,11 @@ for j in range(1,36):
         else:
             x_offset += 0 # X-Z
 
-        cv2.rectangle(my_image, (x+(w+6)*i+x_offset,y+(h+1)*j+y_offset), (X+(w+6)*i+x_offset,Y+(h+1)*j+y_offset), (B,G,R), thickness)
+        # cv2.rectangle(my_image, (x+(w+6)*i+x_offset,y+(h+1)*j+y_offset), (X+(w+6)*i+x_offset,Y+(h+1)*j+y_offset), (B,G,R), thickness)
             
         cropped = my_image[y+(h+1)*j+y_offset:Y+(h+1)*j+y_offset, x+(w+6)*i+x_offset:X+(w+6)*i+x_offset+1]
         
-        if i==0:
-            cv2.imwrite(f"Tests/test_big_letter_{i}_{j}.jpg", cropped)
+        cv2.imwrite(f"Uppercase/{LETTERS[i]}_{j+1}.jpg", cropped)
 
 
 
