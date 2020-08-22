@@ -1,4 +1,5 @@
 import cv2
+import os
 
 # my_image = cv2.imread('Handwriting_Tests/handwriting_ADF_dotted.jpg', cv2.IMREAD_COLOR) # Works with the rows
 # my_image = cv2.imread('Handwriting_Tests/handwriting_ScanBed_dottedPaper.jpg', cv2.IMREAD_COLOR) # Doesnt work with rows
@@ -7,8 +8,13 @@ import cv2
 # my_image = cv2.imread('Handwriting_Tests/bed1.jpg', cv2.IMREAD_COLOR)
 # my_image = cv2.imread('Handwriting_Tests/bed2.jpg', cv2.IMREAD_COLOR)
 
+PATH = 'Handwriting_Samples/symbols.jpg'
+FILE_NAME = PATH[PATH.rfind("/")+1:PATH.rfind(".")].capitalize()
 
-my_image = cv2.imread('Handwriting_Samples/uppercase.jpg', cv2.IMREAD_COLOR)
+# print(FILE_NAME)
+# print(type(FILE_NAME))
+
+my_image = cv2.imread(PATH, cv2.IMREAD_COLOR)
 
 
 # my_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2RGB)
@@ -69,6 +75,8 @@ cv2.imwrite("test_big_letter.jpg", cropped)
 
 LETTERS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 SMALL_LETTERS = [x.lower() for x in LETTERS]
+NUMBERS = ['0','1','2','3','4','5','6','7','8','9']
+SYMBOLS = ['@','$','&',',','period','-']
 # print(SMALL_LETTERS, end=" ")
 
 # Testing all box placements
@@ -107,12 +115,12 @@ for j in range(0,35):
     
     
     x_offset = 2 # Was 15
-    for i in range(0,26):
+    for i in range(0,6):
 
         if i in range(0,5):
             x_offset += 1 # A-E
         elif i in range(5,10): # F-J
-            x_offset += 0
+            x_offset += 1
         elif i in range(10,15): # K-O
             x_offset += 1
         elif i in range(15,20): # P-T
@@ -123,10 +131,21 @@ for j in range(0,35):
             x_offset += 0 # X-Z
 
         # cv2.rectangle(my_image, (x+(w+6)*i+x_offset,y+(h+1)*j+y_offset), (X+(w+6)*i+x_offset,Y+(h+1)*j+y_offset), (B,G,R), thickness)
-            
-        cropped = my_image[y+(h+1)*j+y_offset:Y+(h+1)*j+y_offset, x+(w+6)*i+x_offset:X+(w+6)*i+x_offset+1]
         
-        cv2.imwrite(f"Uppercase/{LETTERS[i]}_{j+1}.jpg", cropped)
+        if not os.path.exists(FILE_NAME): 
+            os.mkdir(FILE_NAME)
+        
+        subfolder_path = f"{FILE_NAME}/{SYMBOLS[i]}"
+        
+        if not os.path.exists(subfolder_path):
+            os.mkdir(subfolder_path)
+
+        cropped = my_image[y+(h+1)*j+y_offset:Y+(h+1)*j+y_offset+1, x+(w+6)*i+x_offset:X+(w+6)*i+x_offset+1]
+        cv2.imwrite(f"{subfolder_path}/{SYMBOLS[i]}_{j+1}.jpg", cropped)
+        
+        # # Do I really need to make a text file with the classifications???
+        # with open("")
+
 
 
 
@@ -175,6 +194,7 @@ cv2.destroyAllWindows()
 # cv2.imshow("The cropped image", cropped2)
 # cv2.imwrite("test_letter2.jpg", cropped2)
 
+
 # cropped3 = my_image[y:Y+1, x+2*w+6:X+2*w+6]
 # cv2.imshow("The cropped image", cropped3)
 # cv2.imwrite("test_letter3.jpg", cropped3)
@@ -185,11 +205,9 @@ cv2.destroyAllWindows()
 # cv2.imwrite("test_letter4.jpg", cropped4)
 
 
-
 # cropped5 = my_image[y:Y+1, x+4*w+11:X+4*w+11]
 # cv2.imshow("The cropped image", cropped3)
 # cv2.imwrite("test_letter5.jpg", cropped5)
-
 
 
 # cropped6 = my_image[y:Y+1, x+5*w+13:X+5*w+13]
