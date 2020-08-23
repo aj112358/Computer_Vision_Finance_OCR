@@ -11,27 +11,34 @@ from matplotlib import image
 
 
 my_image = cv2.imread(r"C:\Users\AJ\Desktop\Computer_Vision_Finance_OCR\Uppercase\A\A_1.jpg")
+
+gray_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2GRAY)
+
 # print(my_image.dtype) # uint8
 # print(my_image.shape) # (73, 73, 3)
+
+# cv2.imshow("original", my_image)
+# cv2.imshow("grayscale", gray_image)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 
 # plt.imshow(my_image)
 # plt.show()
 
 
-data = np.asarray(my_image)
-# print(data)
+data = np.asarray(gray_image)
+print(data)
 # print(data[0][0:3])
 # print(data[0].shape) # 73x3 (Obviously! )
 # print(data.shape) # (73, 73, 3)
 
 # np.savetxt("img_to_array_test2.txt", X=data)
-np.save("img_to_array_test2.txt", arr=data)
+# np.save("img_to_array_test2.txt", arr=data)
 
-# with open("img_to_array_test.txt", "w") as newfile:
-#     newfile.write("A::"+str(data))
-#     # for row in range(73):
-#     #     for col in range(73):
-#     #         newfile.write(str(data[row][col]))
+with open("img_to_array_test.txt", "w") as newfile:
+    newfile.write("A::"+str(data))
+    # for row in range(73):
+    #     newfile.writelines(str(data[row])+",")
 
 
 
