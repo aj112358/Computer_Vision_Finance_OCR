@@ -148,20 +148,6 @@ for j in range(0,35):
 
 
 
-
-# x_offset = 15 # was -2 for the solid line test sheet
-# y_offset2 = -5
-# for i in range(0,26):
-#     x_offset += 1
-#     cv2.rectangle(my_image, (x+(w+6)*i+x_offset,y+5*h+y_ offset2), (X+(w+6)*i+x_offset,Y+5*h+y_offset2), (B,G,R), thickness)
-    
-    # cropped = my_image[y+5*h+y_offset2:Y+5*h+y_offset2+1, x+(w+6)*i+x_offset:X+(w+6)*i+x_offset+1]
-    # cv2.imwrite(f"test_big_letter_{LETTERS[i]}.jpg", cropped)
-
-
-
-
-
 # cv2.namedWindow("Look, it's Pikachu!", cv2.WINDOW_NORMAL)
 cv2.imshow("Look, it's Pikachu!", my_image)
 cv2.waitKey(0)
@@ -213,3 +199,13 @@ cv2.destroyAllWindows()
 # cropped6 = my_image[y:Y+1, x+5*w+13:X+5*w+13]
 # cv2.imshow("The cropped image", cropped3)
 # cv2.imwrite("test_letter6.jpg", cropped6)
+
+
+# x_offset = 15 # was -2 for the solid line test sheet
+# y_offset2 = -5
+# for i in range(0,26):
+#     x_offset += 1
+#     cv2.rectangle(my_image, (x+(w+6)*i+x_offset,y+5*h+y_ offset2), (X+(w+6)*i+x_offset,Y+5*h+y_offset2), (B,G,R), thickness)
+    
+    # cropped = my_image[y+5*h+y_offset2:Y+5*h+y_offset2+1, x+(w+6)*i+x_offset:X+(w+6)*i+x_offset+1]
+    # cv2.imwrite(f"test_big_letter_{LETTERS[i]}.jpg", cropped)
