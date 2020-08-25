@@ -16,7 +16,7 @@ for letter in LETTERS:
         for i in range(1,36):
             my_image = cv2.imread(fr"C:\Users\AJ\Desktop\Computer_Vision_Finance_OCR\Uppercase\{letter}\{letter}_{i}.jpg")
 
-            # gray_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2GRAY)
+            gray_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2GRAY)
 
             # print(my_image.dtype) # uint8
             # print(my_image.shape) # (73, 73, 3)
