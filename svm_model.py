@@ -4,76 +4,35 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 import os
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-from matplotlib import image
+import ast
 
-# Import character data (and clean???)
+LETTERS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+SMALL_LETTERS = [x.lower() for x in LETTERS]
+NUMBERS = ['0','1','2','3','4','5','6','7','8','9']
+SYMBOLS = ['@','$','&',',','period','-']
 
-with open("img_to_array_test.txt", "w") as newfile:
+# Import the data
 
-    for i in range(1,36):
-        my_image = cv2.imread(fr"C:\Users\AJ\Desktop\Computer_Vision_Finance_OCR\Uppercase\A\A_{i}.jpg")
+X = []
+y = []
 
-        # gray_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2GRAY)
+for letter in LETTERS:
 
-        # print(my_image.dtype) # uint8
-        # print(my_image.shape) # (73, 73, 3)
-
-        # cv2.imshow("original", my_image)
-        # cv2.imshow("grayscale", gray_image)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
-
-        # plt.imshow(my_image)
-        # plt.show()
-
-
-        data = np.array(my_image)
-        data_list = data.tolist()
-        print(data_list[0])
-        # print(data[0][0:3])
-        # print(data[0].shape) # 73x3 (Obviously! )
-        # print(data.shape) # (73, 73, 3)
-
-        # np.savetxt("img_to_array_test2.txt", X=data)
-        # np.save("img_to_array_test2.txt", arr=data)
-
-        # newfile.write("A::"+str(data_list)+"\n")
-        # for row in range(73):
-        #     newfile.writelines(str(data[row])+",")
+    with open(fr".\Uppercase\{letter}\{letter}.txt", "r") as newfile:
+        
+        for i in range(35):
+            target, data = newfile.readline().split("::")
+            data = ast.literal_eval(data)
+            y.append(target)
+            X.append(data)
 
 
-
-
-# CWD = os.getcwd()
-# print(CWD)
-# PATH = r"Uppercase/A"
-# raw_data = f"{PATH}/A_1.jpg"
-
-
-
-# print("Path at terminal when executing this file")
-# print(os.getcwd() + "\n")
-
-# print("This file path, relative to os.getcwd()")
-# print(__file__ + "\n")
-
-# print("This file full path (following symlinks)")
-# full_path = os.path.realpath(__file__)
-# print(full_path + "\n")
-
-# print("This file directory and name")
-# path, filename = os.path.split(full_path)
-# print(path + ' --> ' + filename + "\n")
-
-# print("This file directory only")
-# print(os.path.dirname(full_path))
+print(type(X[0]))
 
 
 
 # Split the data
-X
-y
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
 
 # Create & fit the model 

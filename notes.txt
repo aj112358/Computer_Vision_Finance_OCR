@@ -1,0 +1,23 @@
+# print("Path at terminal when executing this file")
+# print(os.getcwd() + "\n")
+
+# print("This file path, relative to os.getcwd()")
+# print(__file__ + "\n")
+
+# print("This file full path (following symlinks)")
+# full_path = os.path.realpath(__file__)
+# print(full_path + "\n")
+
+# print("This file directory and name")
+# path, filename = os.path.split(full_path)
+# print(path + ' --> ' + filename + "\n")
+
+# print("This file directory only")
+# print(os.path.dirname(full_path))
+
+
+
+LETTERS = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+SMALL_LETTERS = [x.lower() for x in LETTERS]
+NUMBERS = ['0','1','2','3','4','5','6','7','8','9']
+SYMBOLS = ['@','$','&',',','period','-']
