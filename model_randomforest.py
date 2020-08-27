@@ -20,7 +20,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 # In[3]:
 
 
-from sklearn.tree import DecisionTreeClassifier
+# from sklearn.tree import DecisionTreeClassifier
 
 
 # In[4]:
@@ -46,7 +46,7 @@ for letter in LETTERS:
 
     with open(fr".\Uppercase\{letter}\{letter}.txt", "r") as newfile:
         
-        for i in range(70):
+        for i in range(105):
             target, data = newfile.readline().split("::")
             data = ast.literal_eval(data)
             y.append(target)
@@ -59,7 +59,7 @@ for letter in LETTERS:
 # print(y[0]) # A
 # print(np.array(y).shape) # (910,)
 # print(np.array(y).ndim) # 1
-print(np.array(X).shape) # (910, 73, 73, 3)
+# print(np.array(X).shape) # (910, 73, 73, 3)
 # print(np.array(X).ndim) # 4
 # print(type(X[0])) $ <class 'list'>
 # # print(X[0])
@@ -72,7 +72,7 @@ print(np.array(X).shape) # (910, 73, 73, 3)
 X = np.array(X)
 y = np.array(y)
 
-X = X.reshape((1820,-1))
+X = X.reshape((2730,-1))
 
 
 # In[57]:
@@ -87,16 +87,22 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 
 
 # print(y_test)
-print(X_train.shape)
-print(X_test[0])
+# print(X_train.shape)
+# print(X_test[0])
 
 
 # In[10]:
 
+########################################################################
+########################################################################
+########################################################################
+########################################################################
+
+
 
 # Instantiate model object
 
-decision_tree_model = DecisionTreeClassifier()
+# decision_tree_model = DecisionTreeClassifier()
 
 
 # In[58]:
@@ -104,7 +110,7 @@ decision_tree_model = DecisionTreeClassifier()
 
 # Fit the model with training data
 
-decision_tree_model.fit(X_train, y_train)
+# decision_tree_model.fit(X_train, y_train)
 
 
 # In[12]:
@@ -112,7 +118,7 @@ decision_tree_model.fit(X_train, y_train)
 
 # Evaluate the model (with testing data)
 
-predictions = decision_tree_model.predict(X_test)
+# predictions = decision_tree_model.predict(X_test)
 
 
 # In[13]:
@@ -121,13 +127,13 @@ predictions = decision_tree_model.predict(X_test)
 # Evaluate the model
 #### Need to assess predictions vs. y_test
 
-classification_report(y_test, predictions)
+# classification_report(y_test, predictions)
 
 
 # In[14]:
 
 
-confusion_matrix(y_test, predictions)
+# confusion_matrix(y_test, predictions)
 
 
 # In[15]:
@@ -135,22 +141,22 @@ confusion_matrix(y_test, predictions)
 
 # Not sure how to interpret the above two reports...so we will instead use plots!
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-# get_ipython().run_line_magic('matplotlib', 'inline')
-plt.rcParams["figure.dpi"] = 150
+# import matplotlib.pyplot as plt
+# import seaborn as sns
+# # get_ipython().run_line_magic('matplotlib', 'inline')
+# plt.rcParams["figure.dpi"] = 150
 
 
 # In[16]:
 
 
-sns.heatmap(confusion_matrix(y_test,predictions))
+# sns.heatmap(confusion_matrix(y_test,predictions))
 
 
 # In[17]:
 
 
-fig, axes = plt.subplots(1,1)
+# fig, axes = plt.subplots(1,1)
 
 # axes.plot(y_test, predictions)
 
@@ -158,8 +164,7 @@ fig, axes = plt.subplots(1,1)
 # axes.set_xticklabels(LETTERS)
 # axes.set_yticklabels(LETTERS)
 
-ax = sns.scatterplot(x = y_test,
-                y = predictions)
+# ax = sns.scatterplot(x = y_test, y = predictions)
 # ax.set_xlim(LETTERS)
 
 
@@ -179,15 +184,20 @@ ax = sns.scatterplot(x = y_test,
 
 
 # Manually determine percent accuracy
-count=0
-for i in range(len(y_test)):
-    if y_test[i] == predictions[i]:
-        count+=1
+# count=0
+# for i in range(len(y_test)):
+#     if y_test[i] == predictions[i]:
+#         count+=1
 
-percent = count/len(y_test) * 100
-print("Number of predictions made: ", len(y_test))
-print("Number correct: ", count)
-print("Percentage correct: ", round(percent, 2), "%")
+# percent = count/len(y_test) * 100
+# print("Number of predictions made: ", len(y_test))
+# print("Number correct: ", count)
+# print("Percentage correct: ", round(percent, 2), "%")
+
+########################################################################
+########################################################################
+########################################################################
+########################################################################
 
 
 # Wow, terrible results! We can try to use a random forest model:
@@ -201,13 +211,13 @@ from sklearn.ensemble import RandomForestClassifier
 # In[40]:
 
 
-num_trees=5000 # Default is 100
+num_trees=2000 # Default is 100
 random_forest_model = RandomForestClassifier(n_estimators=num_trees)
 
 
 # In[41]:
 
-
+print("Fitting model....")
 random_forest_model.fit(X_train,y_train)
 
 
@@ -220,13 +230,13 @@ predictions2 = random_forest_model.predict(X_test)
 # In[43]:
 
 
-sns.heatmap(confusion_matrix(y_test,predictions2))
+# sns.heatmap(confusion_matrix(y_test,predictions2))
 
 
 # In[44]:
 
 
-fig, axes = plt.subplots(1,1)
+# fig, axes = plt.subplots(1,1)
 
 # axes.plot(y_test, predictions)
 
@@ -234,8 +244,7 @@ fig, axes = plt.subplots(1,1)
 # axes.set_xticklabels(LETTERS)
 # axes.set_yticklabels(LETTERS)
 
-ax = sns.scatterplot(x = y_test,
-                y = predictions2)
+# ax = sns.scatterplot(x = y_test, y = predictions2)
 # ax.set_xlim(LETTERS)
 
 

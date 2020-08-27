@@ -13,7 +13,7 @@ for letter in LETTERS:
 
     with open(fr".\Uppercase\{letter}\{letter}.txt", "w") as newfile:
 
-        for i in range(1,71):
+        for i in range(1,106):
             my_image = cv2.imread(fr"C:\Users\AJ\Desktop\Computer_Vision_Finance_OCR\Uppercase\{letter}\{letter}_{i}.jpg")
 
             gray_image = cv2.cvtColor(my_image, cv2.COLOR_BGR2GRAY)

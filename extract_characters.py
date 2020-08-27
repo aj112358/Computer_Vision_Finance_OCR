@@ -8,7 +8,7 @@ import os
 # my_image = cv2.imread('Handwriting_Tests/bed1.jpg', cv2.IMREAD_COLOR)
 # my_image = cv2.imread('Handwriting_Tests/bed2.jpg', cv2.IMREAD_COLOR)
 
-PATH = 'Handwriting_Samples/uppercase2.jpg'
+PATH = 'Handwriting_Samples/uppercase3.jpg'
 FILE_NAME = PATH[PATH.rfind("/")+1:PATH.rfind(".")-1].capitalize()
 
 # print(FILE_NAME)
@@ -141,7 +141,7 @@ for j in range(0,35):
             os.mkdir(subfolder_path)
 
         cropped = my_image[y+(h+1)*j+y_offset:Y+(h+1)*j+y_offset+1, x+(w+6)*i+x_offset:X+(w+6)*i+x_offset+1]
-        cv2.imwrite(f"{subfolder_path}/{LETTERS[i]}_{j+36}.jpg", cropped)
+        cv2.imwrite(f"{subfolder_path}/{LETTERS[i]}_{j+71}.jpg", cropped)
         
 
 
